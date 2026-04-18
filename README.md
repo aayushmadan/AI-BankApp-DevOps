@@ -1,4 +1,4 @@
-# BankApp — Spring Boot Banking Application
+# AIBankApp — Spring Boot Banking Application
 
 A full-stack banking application built with Spring Boot, designed as a hands-on project for learning DevOps end-to-end.
 
@@ -6,6 +6,7 @@ A full-stack banking application built with Spring Boot, designed as a hands-on 
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.1-green)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Ready-326CE5)
 
 ## Features
 
@@ -13,7 +14,7 @@ A full-stack banking application built with Spring Boot, designed as a hands-on 
 - **Dashboard** — View balance, deposit, withdraw, and transfer funds
 - **Transactions** — Full transaction history with timestamps
 - **Dark/Light Theme** — Glassmorphism UI with Bootstrap 5, persisted via localStorage
-- **Prometheus Metrics** — Actuator endpoints exposed for monitoring
+- **DevOps Tooling** — Docker, Docker Compose, Kubernetes
 
 ## Tech Stack
 
@@ -24,14 +25,15 @@ A full-stack banking application built with Spring Boot, designed as a hands-on 
 | Security  | Spring Security (form login, BCrypt)|
 | Frontend  | Thymeleaf, Bootstrap 5              |
 | Metrics   | Spring Actuator, Micrometer         |
-| Container | Docker, Docker Compose              |
+| Container | Docker, Docker Compose,   |
+| Orchestration | Kubernetes
 
 ## Quick Start
 
 ### Run with Docker Compose (recommended)
 
 ```bash
-git clone https://github.com/TrainWithShubham/AI-BankApp-DevOps.git
+git clone https://github.com/aayushmadan/AI-BankApp-DevOps.git
 cd AI-BankApp-DevOps
 git checkout docker
 
@@ -94,6 +96,42 @@ docker compose down -v      # stop and remove volumes
 | bankapp  | 8080 | Spring Boot app      |
 | mysql    | 3306 | MySQL 8.0 database   |
 
+## Kubernetes
+
+This project includes Kubernetes manifests under `k8s/` for a complete cluster deployment.
+It creates a dedicated `bankapp` namespace, persistent storage, MySQL and BankApp deployments, an Ollama model service, cluster services, and an Horizontal Pod Autoscaler (HPA).
+
+### Run with Minikube
+
+```bash
+cd AI-BankApp-DevOps
+./k8s/start-cluster.sh
+```
+
+### What the manifests provide
+
+- `namespace.yml` — dedicated `bankapp` namespace
+- `configMap.yml` — app/environment configuration for BankApp
+- `secrets.yml` — encoded database credentials
+- `persistentVolume.yml` / `persistentVolumeClaim.yml` — storage for MySQL and Ollama
+- `mysql-deployment.yml` — MySQL deployment with probes and PVC mount
+- `bankapp-deployment.yml` — BankApp deployment with initContainers, health probes, and resource limits
+- `ollama-deployment.yml` — Ollama model service with persistent storage and readiness checks
+- `service.yml` — ClusterIP/NodePort services for MySQL, BankApp, and Ollama
+- `hpa.yml` — autoscaling for the BankApp deployment based on CPU utilization
+
+### Access the app
+
+Use Kubernetes port forwarding or minikube service URL:
+
+```bash
+kubectl port-forward svc/bankapp-service 8080:8080 -n bankapp
+```
+
+Then open **http://localhost:8080**.
+
+> If using Minikube, you can also run `minikube service bankapp-service -n bankapp --url`.
+
 ## Project Structure
 
 ```
@@ -129,3 +167,13 @@ src/main/resources/
 | `main`   | Full DevOps pipeline (CI/CD, K8s, etc.)               |
 
 Each branch builds on the previous one. See `ROADMAP.md` for the full checklist.
+
+---
+
+**Aayush Madan**
+- **Email**: aayush.madan4611@gmail.com
+- **LinkedIn**: [http://www.linkedin.com/in/aayush-madan-878a68226](http://www.linkedin.com/in/aayush-madan-878a68226)
+
+---
+
+**This project is built under guidance of [Shubham Londhe](https://github.com/LondheShubham153). Big thanks for all the invaluable knowledge.**
