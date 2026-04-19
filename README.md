@@ -172,7 +172,7 @@ Each branch builds on the previous one. See `ROADMAP.md` for the full checklist.
 
 **Aayush Madan**
 - **Email**: aayush.madan4611@gmail.com
-- **LinkedIn**: [http://www.linkedin.com/in/aayush-madan-878a68226](http://www.linkedin.com/in/aayush-madan-878a68226)
+- **LinkedIn**: [http://www.linkedin.com/in/aayush-madan-devops](http://www.linkedin.com/in/aayush-madan-devops)
 
 ---
 
